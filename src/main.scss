@@ -31,7 +31,7 @@ body {
 a {
   color: $primary;
   text-decoration: none;
-  
+
   &:hover {
     color: $primary-highlight;
   }
@@ -40,13 +40,13 @@ a {
 table {
   width: 100%;
   border-collapse: collapse;
-  
+
   td,
   th {
     border: 1px solid $dark;
   }
 }
-  
+
 #app {
   display: flex;
   flex-direction: column;
@@ -74,4 +74,8 @@ table {
   flex: 1 1 auto;
   padding: 1em;
   background: $white;
+}
+
+#canvas {
+
 }
