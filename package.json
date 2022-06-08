@@ -1,7 +1,7 @@
 {
   "name": "dynamic-sprites-experiment",
   "version": "0.0.1",
-  "description": "This is a hackday experiment to try dynamically altering 2D game sprites on a HTML canvas.",
+  "description": "Hackday experiment to try dynamically altering 2D game sprites on a HTML canvas.",
   "homepage": "https://github.com/shaunanoordin/dynamic-sprites-experiment/",
   "author": "Shaun A. Noordin (https://www.shaunanoordin.com/)",
   "main": "app/index.html",

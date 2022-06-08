@@ -1,6 +1,6 @@
 # Dynamic Sprites Experiment
 
-This is a hackday experiment to try dynamically altering 2D game sprites on a HTML canvas.
+Hackday experiment to try dynamically altering 2D game sprites on a HTML canvas.
 
 Created by [Shaun A. Noordin](https://shaunanoordin.com).
 
