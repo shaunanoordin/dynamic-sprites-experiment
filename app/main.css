@@ -76,6 +76,10 @@ table th {
 #notes h2 {
   padding: 0.1em 1em;
 }
+#notes code {
+  color: #48c;
+  background: #eee;
+}
 #notes li {
   margin-bottom: 0.5em;
   padding: 0.1em 5em 0.1em 0.1em;
