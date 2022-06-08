@@ -97,7 +97,7 @@ export default class App {
   setupUI () {
     this.html.canvas.width = this.canvasWidth
     this.html.canvas.height = this.canvasHeight
-    this.html.canvas.imageSmoothingEnabled = false
+    this.canvas2d.imageSmoothingEnabled = false  /* Allow sprite art to be scaled up in drawImage() */
 
     if (window.PointerEvent) {
       this.html.canvas.addEventListener('pointerdown', this.onPointerDown.bind(this))
