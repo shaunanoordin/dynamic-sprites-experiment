@@ -4,9 +4,16 @@ Hackday experiment to try dynamically altering 2D game sprites on a HTML canvas.
 
 Created by [Shaun A. Noordin](https://shaunanoordin.com).
 
+## Experiment Lessons - Sprite Art
+
+Canvas CSS scaling:
+- If the `<canvas>`'s CSS width/height is scaled larger than its HTML
+  width/height, use `canvas { image-rendering: pixelated }` to maintain the
+  sharp edges of sprite art.
+
 ## How to Use
 
-Start the web app by accessing `index.html` from your web browser. (Compatible with Chrome 89 and Firefox 87.)
+Start the web app by accessing `index.html` from your web browser. (Compatible with Chrome 102 and Firefox 101.)
 
 ## Development Notes
 
