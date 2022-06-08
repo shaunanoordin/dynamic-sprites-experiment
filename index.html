@@ -17,6 +17,13 @@
   <canvas id="canvas"></canvas>
   <output id="console"></output>
 </main>
+<section id="notes">
+  <ul>
+    <li>In the image above, the <code>&lt;canvas&gt;</code> has HTML width=160 and width=80. However, it's scaled up since it has CSS width=100%. The sprite art still retains pixel sharpness, because we used <code>canvas { image-rendering: pixelated }</code> (CSS)</li>
+    <li>Two Marios are rendered using <code>canvasContext2d.drawImage()</code>. The first (left-most) is drawn at 1.0x scale. The second is drawn at 4.0x scale. The second image still retains pixel sharpness, because we used <code>canvasContext2d.imageSmoothing = false</code> (JS)</li>
+    <li>Tested on macOS + Chrome 102 / Firefox 101.</li>
+  </ul>
+</section>
 <footer>2022</footer>
 </div><!--/#app-->
 </body>

@@ -68,4 +68,14 @@ table th {
   width: 100%;
 }
 
+#notes {
+  font-family: sans-serif;
+  font-size: 0.8em;
+  line-height: 1.25em;
+  overflow: auto;
+}
+#notes li {
+  margin-bottom: 0.5em;
+}
+
 /*# sourceMappingURL=main.css.map */

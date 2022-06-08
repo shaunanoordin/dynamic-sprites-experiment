@@ -10,8 +10,8 @@ Created by [Shaun A. Noordin](https://shaunanoordin.com).
 larger than its _HTML width/height,_ be sure to use use `canvas { image-rendering: pixelated }`.
 This preserves the pixel sharpness of our sprite art.
 
-**Canvas 2D Context scaling:** Before we use `canvasContext2D.drawImage()` to
-draw sprite art, be sure to specify `canvasContext2D.imageSmoothingEnabled = false`.
+**Canvas 2D Context scaling:** Before we use `canvasContext2d.drawImage()` to
+draw sprite art, be sure to specify `canvasContext2d.imageSmoothingEnabled = false`.
 This allows sprite art to be scaled up correctly.
 
 ## How to Use
