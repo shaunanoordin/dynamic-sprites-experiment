@@ -4,7 +4,7 @@ import ImageAsset from './ImageAsset'
  */
 //==============================================================================
 export default class App {
-  constructor (width = 640, height = 480) {
+  constructor (width = 160, height = 80) {
     this.html = {
       canvas: document.getElementById('canvas'),
       main: document.getElementById('main'),
@@ -48,18 +48,32 @@ export default class App {
   paint () {
     const c2d = this.canvas2d
     const camera = this.camera
+    const img = this.assets.mario.img
 
     c2d.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
     c2d.fillStyle = '#ccc'
     c2d.fillRect(0, 0, this.canvasWidth, this.canvasHeight)
 
-    const img = this.assets.mario.img
-    const scale = 32
-    const srcX = 6, srcY = 7
-    const srcSizeX = 12, srcSizeY = 16
-    const tgtX = 0, tgtY = 0
-    const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
-    c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
+    function paintSmallMario () {
+      const scale = 1
+      const srcX = 6, srcY = 7
+      const srcSizeX = 12, srcSizeY = 16
+      const tgtX = 0, tgtY = 0
+      const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
+      c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
+    }
+
+    function paintBigMario () {
+      const scale = 4
+      const srcX = 6, srcY = 7
+      const srcSizeX = 12, srcSizeY = 16
+      const tgtX = 12, tgtY = 0
+      const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
+      c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
+    }
+
+    paintSmallMario()
+    paintBigMario()
   }
 
   initialisationCheck () {

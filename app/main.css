@@ -63,4 +63,9 @@ table th {
   background: #fff;
 }
 
+#canvas {
+  image-rendering: pixelated; /* Maintains sprite art when canvas's CSS width/height is scaled up from its HTML width/height */
+  width: 100%;
+}
+
 /*# sourceMappingURL=main.css.map */
