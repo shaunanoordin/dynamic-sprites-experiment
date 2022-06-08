@@ -90,10 +90,10 @@ export default class App {
     }
 
     function paintRotatedMario (progress = 0.0) {
-      const scale = 1
+      const scale = 2
       const srcX = 6, srcY = 7
       const srcSizeX = 12, srcSizeY = 16
-      const tgtX = 96, tgtY = 16
+      const tgtX = 108, tgtY = 24
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
 
       c2d.translate(tgtX, tgtY)
@@ -101,11 +101,11 @@ export default class App {
       c2d.drawImage(
         img,
         srcX, srcY, srcSizeX, srcSizeY,
-        tgtSizeX / -2, tgtY / -2,  // Paint sprite, centred on 0,0
+        tgtSizeX / -2, tgtSizeY / -2,  // Paint sprite, centred on 0,0
         tgtSizeX, tgtSizeY
       )
-      // c2d.resetTransform()
-      c2d.setTransform(1, 0, 0, 1, 0, 0)
+      c2d.resetTransform()
+      // c2d.setTransform(1, 0, 0, 1, 0, 0)
     }
 
     function paintHuedMario (progress = 0.0) {
