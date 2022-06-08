@@ -21,8 +21,8 @@ export default class App {
       'mario': new ImageAsset('assets/mario.gif'),
     }
 
-    this.rotatedMario_rotationTime = 0
-    this.rotatedMario_rotationMax = 12000
+    this.transformTime = 0
+    this.transformMax = 12000
 
     this.prevTime = null
     this.nextFrame = window.requestAnimationFrame(this.main.bind(this))
@@ -47,7 +47,7 @@ export default class App {
   }
 
   play (timeStep = 0) {
-    this.rotatedMario_rotationTime = (this.rotatedMario_rotationTime + timeStep) % this.rotatedMario_rotationMax
+    this.transformTime = (this.transformTime + timeStep) % this.transformMax
   }
 
   paint () {
@@ -89,8 +89,7 @@ export default class App {
       c2d.restore()
     }
 
-    function paintRotatedMario (progress) {
-      c2d.save()
+    function paintRotatedMario (progress = 0.0) {
       const scale = 1
       const srcX = 6, srcY = 7
       const srcSizeX = 12, srcSizeY = 16
@@ -105,13 +104,29 @@ export default class App {
         tgtSizeX / -2, tgtY / -2,  // Paint sprite, centred on 0,0
         tgtSizeX, tgtSizeY
       )
+      // c2d.resetTransform()
+      c2d.setTransform(1, 0, 0, 1, 0, 0)
+    }
+
+    function paintHuedMario (progress = 0.0) {
+      c2d.save()
+      const scale = 1
+      const srcX = 6, srcY = 7
+      const srcSizeX = 12, srcSizeY = 16
+      const tgtX = 72, tgtY = 24
+      const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
+
+      c2d.filter = `hue-rotate(${progress * 360}deg)`
+      c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
       c2d.restore()
     }
 
+    const progress = this.transformTime / this.transformMax
     paintSmallMario()
     paintBigMario()
     paintInvertedMario()
-    paintRotatedMario(this.rotatedMario_rotationTime / this.rotatedMario_rotationMax)
+    paintRotatedMario(progress)
+    paintHuedMario(progress)
 
   }
 
