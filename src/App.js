@@ -21,6 +21,9 @@ export default class App {
       'mario': new ImageAsset('assets/mario.gif'),
     }
 
+    this.rotatedMario_rotationTime = 0
+    this.rotatedMario_rotationMax = 12000
+
     this.prevTime = null
     this.nextFrame = window.requestAnimationFrame(this.main.bind(this))
   }
@@ -43,7 +46,9 @@ export default class App {
     this.nextFrame = window.requestAnimationFrame(this.main.bind(this))
   }
 
-  play (timeStep = 0) {}
+  play (timeStep = 0) {
+    this.rotatedMario_rotationTime = (this.rotatedMario_rotationTime + timeStep) % this.rotatedMario_rotationMax
+  }
 
   paint () {
     const c2d = this.canvas2d
@@ -72,8 +77,42 @@ export default class App {
       c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
     }
 
+    function paintInvertedMario () {
+      c2d.save()
+      c2d.globalCompositeOperation = 'exclusion'
+      const scale = 1
+      const srcX = 6, srcY = 7
+      const srcSizeX = 12, srcSizeY = 16
+      const tgtX = 72, tgtY = 0
+      const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
+      c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
+      c2d.restore()
+    }
+
+    function paintRotatedMario (progress) {
+      c2d.save()
+      const scale = 1
+      const srcX = 6, srcY = 7
+      const srcSizeX = 12, srcSizeY = 16
+      const tgtX = 96, tgtY = 16
+      const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
+
+      c2d.translate(tgtX, tgtY)
+      c2d.rotate(Math.PI * 2 * progress)
+      c2d.drawImage(
+        img,
+        srcX, srcY, srcSizeX, srcSizeY,
+        tgtSizeX / -2, tgtY / -2,  // Paint sprite, centred on 0,0
+        tgtSizeX, tgtSizeY
+      )
+      c2d.restore()
+    }
+
     paintSmallMario()
     paintBigMario()
+    paintInvertedMario()
+    paintRotatedMario(this.rotatedMario_rotationTime / this.rotatedMario_rotationMax)
+
   }
 
   initialisationCheck () {
