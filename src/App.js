@@ -8,11 +8,13 @@ export default class App {
     this.html = {
       canvas: document.getElementById('canvas'),
       main: document.getElementById('main'),
+      offscreenCanvas: new OffscreenCanvas(12, 16),  // Should fit size of Mario sprite
     }
 
     this.canvas2d = this.html.canvas.getContext('2d')
     this.canvasWidth = width
     this.canvasHeight = height
+    this.offscreenCanvas2d = this.html.offscreenCanvas.getContext('2d')
 
     this.setupUI()
 
@@ -52,8 +54,9 @@ export default class App {
 
   paint () {
     const c2d = this.canvas2d
-    const camera = this.camera
+    const cOff = this.offscreenCanvas2d
     const img = this.assets.mario.img
+    const htmlOffscreenCanvas = this.html.offscreenCanvas
 
     c2d.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
     c2d.fillStyle = '#ccc'
@@ -121,12 +124,37 @@ export default class App {
       c2d.restore()
     }
 
+    function paintLuigi () {
+      c2d.save()
+      cOff.save()
+
+      const scale = 1
+      const srcX = 6, srcY = 7
+      const srcSizeX = 12, srcSizeY = 16
+      const tgtX = 72, tgtY = 48
+      const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
+
+      // Draw Mario to offscreen canvas
+      cOff.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, 0, 0, srcSizeX, srcSizeY)
+
+      // Modify the Mario sprite on the offscreen canvas
+      // TODO
+
+      // Draw the modified sprite (on the offscreen canvas) on to the main canvas
+      c2d.drawImage(htmlOffscreenCanvas, 0, 0, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
+
+      c2d.restore()
+      cOff.restore()
+      cOff.clearRect(0, 0, 12, 16)
+    }
+
     const progress = this.transformTime / this.transformMax
     paintSmallMario()
     paintBigMario()
     paintInvertedMario()
     paintRotatedMario(progress)
     paintHuedMario(progress)
+    paintLuigi()
 
   }
 
