@@ -1,5 +1,8 @@
 import ImageAsset from './ImageAsset'
 
+const SPRITE_WIDTH = 12
+const SPRITE_HEIGHT = 16
+
 /*  Primary App Class
  */
 //==============================================================================
@@ -8,7 +11,7 @@ export default class App {
     this.html = {
       canvas: document.getElementById('canvas'),
       main: document.getElementById('main'),
-      offscreenCanvas: new OffscreenCanvas(12, 16),  // Should fit size of Mario sprite
+      offscreenCanvas: new OffscreenCanvas(SPRITE_WIDTH, SPRITE_HEIGHT),  // Should fit size of Mario sprite
     }
 
     this.canvas2d = this.html.canvas.getContext('2d')
@@ -65,7 +68,7 @@ export default class App {
     function paintSmallMario () {
       const scale = 1
       const srcX = 6, srcY = 7
-      const srcSizeX = 12, srcSizeY = 16
+      const srcSizeX = SPRITE_WIDTH, srcSizeY = SPRITE_HEIGHT
       const tgtX = 0, tgtY = 0
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
       c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
@@ -74,7 +77,7 @@ export default class App {
     function paintBigMario () {
       const scale = 4
       const srcX = 6, srcY = 7
-      const srcSizeX = 12, srcSizeY = 16
+      const srcSizeX = SPRITE_WIDTH, srcSizeY = SPRITE_HEIGHT
       const tgtX = 12, tgtY = 0
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
       c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
@@ -85,7 +88,7 @@ export default class App {
       c2d.globalCompositeOperation = 'exclusion'
       const scale = 1
       const srcX = 6, srcY = 7
-      const srcSizeX = 12, srcSizeY = 16
+      const srcSizeX = SPRITE_WIDTH, srcSizeY = SPRITE_HEIGHT
       const tgtX = 72, tgtY = 0
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
       c2d.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
@@ -95,7 +98,7 @@ export default class App {
     function paintRotatedMario (progress = 0.0) {
       const scale = 2
       const srcX = 6, srcY = 7
-      const srcSizeX = 12, srcSizeY = 16
+      const srcSizeX = SPRITE_WIDTH, srcSizeY = SPRITE_HEIGHT
       const tgtX = 108, tgtY = 24
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
 
@@ -115,7 +118,7 @@ export default class App {
       c2d.save()
       const scale = 1
       const srcX = 6, srcY = 7
-      const srcSizeX = 12, srcSizeY = 16
+      const srcSizeX = SPRITE_WIDTH, srcSizeY = SPRITE_HEIGHT
       const tgtX = 72, tgtY = 24
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
 
@@ -130,7 +133,7 @@ export default class App {
 
       const scale = 1
       const srcX = 6, srcY = 7
-      const srcSizeX = 12, srcSizeY = 16
+      const srcSizeX = SPRITE_WIDTH, srcSizeY = SPRITE_HEIGHT
       const tgtX = 72, tgtY = 48
       const tgtSizeX = srcSizeX * scale, tgtSizeY = srcSizeY * scale
 
@@ -138,14 +141,36 @@ export default class App {
       cOff.drawImage(img, srcX, srcY, srcSizeX, srcSizeY, 0, 0, srcSizeX, srcSizeY)
 
       // Modify the Mario sprite on the offscreen canvas
-      // TODO
+      // Go pixel by pixel, transforming red pixels into green, therefore
+      // transforming Mario into Luigi.
+      const offImage = cOff.getImageData(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
+      const offData = offImage?.data
+      const dataLength = offData?.length || 0
+      for (let i = 0 ; i < dataLength ; i += 4) {
+        const r = offData[i + 0]
+        const g = offData[i + 1]
+        const b = offData[i + 2]
+        const a = offData[i + 3]
+        if (g > r && g > b) {  // Transform green pixels -> transparent
+          offData[i + 0] = 0
+          offData[i + 1] = 0
+          offData[i + 2] = 0
+          offData[i + 3] = 0
+        } else if (r > (g+b) * 2) {  // Transform red pixels -> green
+          offData[i + 0] = 64
+          offData[i + 1] = 192
+          offData[i + 2] = 96
+          offData[i + 3] = a
+        }
+      }
+      cOff.putImageData(offImage, 0, 0)
 
       // Draw the modified sprite (on the offscreen canvas) on to the main canvas
       c2d.drawImage(htmlOffscreenCanvas, 0, 0, srcSizeX, srcSizeY, tgtX, tgtY, tgtSizeX, tgtSizeY)
 
       c2d.restore()
       cOff.restore()
-      cOff.clearRect(0, 0, 12, 16)
+      cOff.clearRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
     }
 
     const progress = this.transformTime / this.transformMax
