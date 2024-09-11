@@ -25,10 +25,10 @@
     <li><b>Save &amp; Restore:</b> While creating the colour-inverted Mario, we discover that the "canvas settings" can be saved via <code>canvasContext2d.save()</code> and <code>canvasContext2d.restore()</code>. This is useful for resetting settings to their "default" values.</li>
     <li><b>Translation &amp; Rotation:</b> While creating the rotating Mario, we discover that, if we want to draw Mario at coordinates (x, y), then using <code>canvasContext2d.translate(x, y) ; canvasContext2d.drawImage(mario)</code> is a viable alternative to <code>canvasContext2d.drawImage(mario, x, y)</code>. Using translate() allows us to perform other transformations like rotate()... though as we can see, sprites that are rotated in any angle <i>not</i> in 90º increments look pretty wonky.</li>
     <li><b>Reset Transforms:</b> While creating the rotating Mario, we also discover that positional transforms (rotate, skew, translate) can be reset using either <code>canvasContext2d.resetTransform()</code> or <code>canvasContext2d.setTransform(1, 0, 0, 1, 0, 0)</code>. As of 8 Jun 2022, resetTransform() was marked as 'experimental' on <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/resetTransform">MDN</a>, but appears to be fully codified in <a href="https://html.spec.whatwg.org/multipage/canvas.html#dom-context-2d-resettransform">WHATWG's documentation</a>.</li>
-    <li>Tested on macOS + Chrome 102 / Firefox 101.</li>
+    <li>Tested on macOS + Chrome 128 / Firefox 130 / Safari 15.6.1.</li>
   </ul>
 </section>
-<footer>2022</footer>
+<footer>2024</footer>
 </div><!--/#app-->
 </body>
 </html>
